@@ -1,0 +1,4 @@
+* Add validation and transformation for input using pipes
+* Examine possible error cases 
+* Logging
+* Unit Tests
