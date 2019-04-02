@@ -5,7 +5,7 @@ import {authenticate} from './../src/middleware/authentication.middleware';
 import { UnstructuredLogService } from '../src/services/unstructured-log.service';
 import { StructuredLogService } from '../src/services/structured-log.service';
 import { NestApplication } from '@nestjs/core';
-import * as mockedEnv from 'mocked-env'
+import * as mockedEnv from 'mocked-env';
 
 describe('AppController (e2e)', () => {
   let app: NestApplication;
