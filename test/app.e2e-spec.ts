@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import {authenticate} from './../src/middleware/authentication.middleware';
+import { authenticate } from './../src/middleware/authentication.middleware';
 import { UnstructuredLogService } from '../src/services/unstructured-log.service';
 import { StructuredLogService } from '../src/services/structured-log.service';
 import { NestApplication } from '@nestjs/core';
@@ -25,11 +25,11 @@ describe('AppController (e2e)', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     })
-    .overrideProvider(UnstructuredLogService)
-    .useValue(serviceMock)
-    .overrideProvider(StructuredLogService)
-    .useValue(serviceMock)
-    .compile();
+      .overrideProvider(UnstructuredLogService)
+      .useValue(serviceMock)
+      .overrideProvider(StructuredLogService)
+      .useValue(serviceMock)
+      .compile();
     serviceMock.sendLogs = jest.fn();
 
     app = moduleFixture.createNestApplication();
@@ -68,17 +68,17 @@ describe('AppController (e2e)', () => {
 
   it('/v1/unstructured (POST) succeeds with good authorization', async () => {
     await request(app.getHttpServer())
-    .post('/v1/unstructured')
-    .set('Authorization', 'Bearer goodsecret')
-    .expect(201);
+      .post('/v1/unstructured')
+      .set('Authorization', 'Bearer goodsecret')
+      .expect(201);
     expect(serviceMock.sendLogs).toHaveBeenCalledTimes(1);
   });
 
   it('/v1/structured (POST) succeeds with good authorization', async () => {
     await request(app.getHttpServer())
-    .post('/v1/structured')
-    .set('Authorization', 'Bearer goodsecret')
-    .expect(201);
+      .post('/v1/structured')
+      .set('Authorization', 'Bearer goodsecret')
+      .expect(201);
     expect(serviceMock.sendLogs).toHaveBeenCalledTimes(1);
   });
 });
