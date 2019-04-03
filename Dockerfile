@@ -1,9 +1,7 @@
 FROM node:10-alpine
 
-RUN mkdir -p /usr/src/app
+COPY package.json /usr/src/app/package.json
 WORKDIR /usr/src/app
-
-COPY package.json /usr/src/app/
 RUN yarn install
 
 COPY . /usr/src/app
