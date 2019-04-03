@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 
-export function authenticate(req: Request, res: Response, next: (err?: any) => void) {
+export function authenticate(
+  req: Request,
+  res: Response,
+  next: (err?: any) => void,
+) {
   if (!req.path.includes('ready') && !verifyAuthorizationHeader(req)) {
     return res.status(403).json({ error: 'No auth token provided' });
   }

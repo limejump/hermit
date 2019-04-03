@@ -7,7 +7,9 @@ export class UnstructuredLogService {
 
   async sendLogs(logs: UnstructuredLogDto): Promise<boolean> {
     try {
-      const response = await this.httpService.post('/api/v1/ingest/humio-unstructured', logs).toPromise();
+      const response = await this.httpService
+        .post('/api/v1/ingest/humio-unstructured', logs)
+        .toPromise();
       return response.status === 200;
     } catch {
       return false;

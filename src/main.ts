@@ -21,7 +21,10 @@ if (!process.env.AUTHORIZATION_KEY && process.env.NODE_ENV !== 'development') {
   throw { error: 'No authorization key and running in production' };
 }
 
-if (!process.env.DEFAULT_INGEST_TOKEN && process.env.NODE_ENV !== 'development') {
+if (
+  !process.env.DEFAULT_INGEST_TOKEN &&
+  process.env.NODE_ENV !== 'development'
+) {
   throw { error: 'No ingest token set up and running in production' };
 }
 
