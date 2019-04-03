@@ -7,7 +7,9 @@ export class StructuredLogService {
 
   async sendLogs(logs: StructuredLogDto[]): Promise<boolean> {
     try {
-      const response = await this.httpService.post('/api/v1/ingest/humio-structured', logs).toPromise();
+      const response = await this.httpService
+        .post('/api/v1/ingest/humio-structured', logs)
+        .toPromise();
       return response.status === 200;
     } catch {
       return false;
