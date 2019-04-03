@@ -11,6 +11,7 @@ It provides three endpoints:
 All endpoints except `/v1/ready` require an authorization key to be sent in the header.
 
 ### Example Query
+
 ```curl
 curl --request POST \
   --url http://localhost:3000/v1/structured \
@@ -54,6 +55,7 @@ curl --request POST \
 ```
 
 ## Configuration
+
 The application requires two secret environment variables to be set. Examples of these (with insecure values!) can be found in `.env.example`. During local development a `.env` file can be used and authorization is disabled. For production these values are _required_ to be set and a `.env` file cannot be used.
 
 * `AUTHORIZATION_KEY`, the key to be used in the Authorization header. Is okay to be exposed to the client. Easily rotated.
