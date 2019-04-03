@@ -102,3 +102,12 @@ $ yarn run test:e2e
 # test coverage
 $ yarn run test:cov
 ```
+
+## Deploying using Docker
+
+We have [Google Cloud Build](https://cloud.google.com/cloud-build/) set up to build the
+Docker image on push to master. Currently we just publish a single Docker tag. An issue
+has been opened [here](https://github.com/limejump/hermit/issues/11) to implement
+versioning (including version tagged Docker images).
+
+The latest master branch build is available at `gcr.io/limejump-public/hermit:latest`.
