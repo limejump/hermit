@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermit
+  namespace: cx
+spec:
+  replicas: 3
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: hermit
+  template:
+    metadata:
+      labels:
+        app: hermit
+    spec:
+      containers:
+      - name: hermit
+        image: eu.gcr.io/limejump/hermit:a8c98587ab4198e63b4ec035ee13083365f6d91d
+        envFrom:
+        - secretRef:
+            name: keys
+            optional: false
+        resources:
+          limits:
+            memory: 128Mi
+            cpu: 100m
+          requests:
+            memory: 128Mi
+            cpu: 10m
+        ports:
+        - name: web
+          containerPort: 3000
+        readinessProbe:
+          httpGet:
+            port: web
+            path: /v1/ready
