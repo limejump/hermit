@@ -1,0 +1,66 @@
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: hermit
+  namespace: cx
+spec:
+  acme:
+    config:
+    - dns01:
+        provider: limejump-dot-io-clouddns
+      domains:
+      - hermit.dev.limejump.io
+  dnsNames:
+  - hermit.dev.limejump.io
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt
+  secretName: hermit-tls
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: hermit-gateway
+  namespace: cx
+spec:
+  selector:
+    istio: ingressgateway  # Use the default Istio gateway provider
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - hermit.dev.limejump.io
+    tls:
+      httpsRedirect: true
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - hermit.dev.limejump.io
+    tls:
+      mode: SIMPLE
+      credentialName: hermit-tls
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: hermit
+  namespace: cx
+spec:
+  hosts:
+  - hermit.dev.limejump.io
+  gateways:
+  - hermit-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 80
+        host: hermit
