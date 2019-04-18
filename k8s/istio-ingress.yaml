@@ -3,7 +3,10 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
   name: hermit
-  namespace: cx
+  # The certificate needs to live in the same namespace as the actual
+  # gateway workload. This is weird, and is talked about a little bit here:
+  # https://github.com/istio/istio/issues/12132#issuecomment-479544269
+  namespace: istio-system
 spec:
   acme:
     config:
