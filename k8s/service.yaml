@@ -10,3 +10,23 @@ spec:
   ports:
   - port: 80
     targetPort: web
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: hermit
+  namespace: cx
+spec:
+  hosts:
+  - hermit.dev.limejump.io
+  gateways:
+  - hermit-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 80
+        host: hermit
