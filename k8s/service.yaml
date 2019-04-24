@@ -22,22 +22,18 @@ spec:
   gateways:
   - hermit-gateway
   http:
-  - route:
-    - destination:
-        port:
-          number: 80
-        host: hermit
-        subset: master
-  - route:
-    - destination:
-        port:
-          number: 80
-        host: hermit
-        subset: feature-x
-    match:
+  - match:
     - headers:
         x-limejump-magic-header:
           exact: yeet
+    route:
+    - destination:
+        host: hermit
+        subset: feature-x
+  - route:
+    - destination:
+        host: hermit
+        subset: master
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
