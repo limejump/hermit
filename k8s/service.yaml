@@ -50,6 +50,8 @@ spec:
   - name: master
     labels:
       branch: master
+      app: hermit
   - name: feature-x
     labels:
       branch: feature-x
+      app: hermit
