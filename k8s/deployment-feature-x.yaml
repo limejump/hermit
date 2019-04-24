@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: hermit
-        image: eu.gcr.io/limejump/hermit:b2a73a3b325b397956e0be831a1667edb9f46df3
+        image: eu.gcr.io/limejump/hermit:6510ee3b41226bcca906850c2e64ba58659687e4
         envFrom:
         - secretRef:
             name: keys
