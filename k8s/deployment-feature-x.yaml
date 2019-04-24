@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hermit
+  name: hermit-feature-x
   namespace: cx
 spec:
   replicas: 3
@@ -9,12 +9,12 @@ spec:
   selector:
     matchLabels:
       app: hermit
-      branch: master
+      branch: feature-x
   template:
     metadata:
       labels:
         app: hermit
-        branch: master
+        branch: feature-x
     spec:
       containers:
       - name: hermit

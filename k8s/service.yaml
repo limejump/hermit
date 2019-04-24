@@ -22,11 +22,34 @@ spec:
   gateways:
   - hermit-gateway
   http:
-  - match:
-    - uri:
-        prefix: /
-    route:
+  - route:
     - destination:
         port:
           number: 80
         host: hermit
+        subset: master
+  - route:
+    - destination:
+        port:
+          number: 80
+        host: hermit
+        subset: feature-x
+    match:
+    - headers:
+        x-limejump-magic-header:
+          exact: yeet
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: hermit
+  namespace: cx
+spec:
+  host: hermit
+  subsets:
+  - name: master
+    labels:
+      branch: master
+  - name: feature-x
+    labels:
+      branch: feature-x
