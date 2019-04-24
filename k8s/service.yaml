@@ -7,7 +7,6 @@ metadata:
 spec:
   selector:
     app: hermit
-    branch: master
   ports:
   - port: 80
     targetPort: web
@@ -50,9 +49,7 @@ spec:
   subsets:
   - name: master
     labels:
-      branch: master
-      app: hermit
+      version: master
   - name: feature-x
     labels:
-      branch: feature-x
-      app: hermit
+      version: feature-x
