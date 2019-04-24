@@ -1,9 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Logger } from '@nestjs/common';
 
 @Controller('v1/ready')
 export class ReadyController {
+  private readonly logger = new Logger('Ready Controller');
+
   @Get()
-  async submitLog() {
+  async get() {
+    this.logger.log('/ready')
     return;
   }
 }
