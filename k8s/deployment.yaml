@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hermit
-  namespace: cx
 spec:
   replicas: 3
   revisionHistoryLimit: 2
@@ -16,10 +15,10 @@ spec:
     spec:
       containers:
       - name: hermit
-        image: eu.gcr.io/limejump/hermit:a8c98587ab4198e63b4ec035ee13083365f6d91d
+        image: eu.gcr.io/limejump/hermit:<git commit sha>
         envFrom:
         - secretRef:
-            name: keys
+            name: hermit-keys
             optional: false
         resources:
           limits:
