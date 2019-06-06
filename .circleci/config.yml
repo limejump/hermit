@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test:
+  build:
     docker:
       - image: circleci/node:chakracore-10
     steps:
@@ -23,7 +23,3 @@ jobs:
       - run:
           name: e2e
           command: yarn test:e2e
-workflows:
-  test:
-    jobs:
-      - test
