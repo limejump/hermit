@@ -70,6 +70,7 @@ _required_ to be set and a `.env` file cannot be used.
     [Humio repository](https://docs.humio.com/concepts/repositories/) you wish to log to.
     More details about ingest tokens
     [can be found here](https://docs.humio.com/sending-data-to-humio/ingest-tokens/).
+* `WHITELIST_CORS`, a comma separated set of regex or strings that are the domains that should be allowed to make CORS requests
 
 ## Installation
 

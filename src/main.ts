@@ -13,7 +13,11 @@ async function bootstrap() {
   app.use(helmet());
   app.use(compression());
   app.useGlobalFilters(new HttpExceptionFilter());
-  app.enableCors();
+  let corsOptions = {
+    origin: process.env.WHITELIST_CORS ? process.env.WHITELIST_CORS.split(',') : [],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }
+  app.enableCors(corsOptions);
   await app.listen(3000);
 }
 
