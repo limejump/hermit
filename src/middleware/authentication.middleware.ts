@@ -26,6 +26,7 @@ function verifyAuthorizationHeader(req: Request): boolean {
   return (
     authHeader &&
     ((authParts[0] === 'Bearer' &&
-      authParts[1] === process.env.AUTHORIZATION_KEY) || authParts[0] === process.env.AUTHORIZATION_KEY)
-  );;
+      authParts[1] === process.env.AUTHORIZATION_KEY) ||
+      authParts[0] === process.env.AUTHORIZATION_KEY)
+  );
 }

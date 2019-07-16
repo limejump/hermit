@@ -12,7 +12,7 @@ describe('AppController (e2e)', () => {
   // To avoid testing our services - just ensure they're called
   const serviceMock = {
     // tslint:disable-next-line
-    sendLogs: () => { },
+    sendLogs: () => {},
   };
 
   beforeEach(async () => {
