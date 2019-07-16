@@ -81,4 +81,12 @@ describe('AppController (e2e)', () => {
       .expect(201);
     expect(serviceMock.sendLogs).toHaveBeenCalledTimes(1);
   });
+
+  it('/v1/structured (POST) succeeds with good authorization without bearer', async () => {
+    await request(app.getHttpServer())
+      .post('/v1/structured')
+      .set('Authorization', 'goodsecret')
+      .expect(201);
+    expect(serviceMock.sendLogs).toHaveBeenCalledTimes(1);
+  });
 });

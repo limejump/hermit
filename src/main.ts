@@ -13,10 +13,16 @@ async function bootstrap() {
   app.use(helmet());
   app.use(compression());
   app.useGlobalFilters(new HttpExceptionFilter());
-  let corsOptions = {
-    origin: process.env.WHITELIST_CORS ? process.env.WHITELIST_CORS.split(',') : [],
-    allowedHeaders: ['Content-Type', 'Authorization']
-  }
+  const defaultOriginsAllowed =
+    process.env.NODE_ENV !== 'production'
+      ? [/localhost/, /127.0.0.1$/]
+      : [];
+  const corsOptions = {
+    origin: process.env.WHITELIST_CORS
+      ? [...process.env.WHITELIST_CORS.split(','), ...defaultOriginsAllowed]
+      : defaultOriginsAllowed,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  };
   app.enableCors(corsOptions);
   await app.listen(3000);
 }
