@@ -12,7 +12,7 @@ describe('AppController (e2e)', () => {
   // To avoid testing our services - just ensure they're called
   const serviceMock = {
     // tslint:disable-next-line
-    sendLogs: () => {},
+    sendLogs: () => { },
   };
 
   beforeEach(async () => {
@@ -78,6 +78,14 @@ describe('AppController (e2e)', () => {
     await request(app.getHttpServer())
       .post('/v1/structured')
       .set('Authorization', 'Bearer goodsecret')
+      .expect(201);
+    expect(serviceMock.sendLogs).toHaveBeenCalledTimes(1);
+  });
+
+  it('/v1/structured (POST) succeeds with good authorization without bearer', async () => {
+    await request(app.getHttpServer())
+      .post('/v1/structured')
+      .set('Authorization', 'goodsecret')
       .expect(201);
     expect(serviceMock.sendLogs).toHaveBeenCalledTimes(1);
   });
