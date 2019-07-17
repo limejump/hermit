@@ -14,9 +14,7 @@ async function bootstrap() {
   app.use(compression());
   app.useGlobalFilters(new HttpExceptionFilter());
   const defaultOriginsAllowed =
-    process.env.NODE_ENV !== 'production'
-      ? [/localhost/, /127.0.0.1$/]
-      : [];
+    process.env.NODE_ENV !== 'production' ? [/localhost/, /127.0.0.1$/] : [];
   const corsOptions = {
     origin: process.env.WHITELIST_CORS
       ? [...process.env.WHITELIST_CORS.split(','), ...defaultOriginsAllowed]
