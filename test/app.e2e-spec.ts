@@ -89,4 +89,10 @@ describe('AppController (e2e)', () => {
       .expect(201);
     expect(serviceMock.sendLogs).toHaveBeenCalledTimes(1);
   });
+
+  it('/v1/structured (POST) succeeds with good authorization parameter passed as a query string', async () => {
+    await request(app.getHttpServer())
+      .post('/v1/structured?auth=goodsecret')
+      .expect(201);
+  });
 });

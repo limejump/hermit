@@ -11,22 +11,21 @@ export function authenticate(
     return;
   }
 
-  if (!req.path.includes('ready') && !verifyAuthorizationHeader(req)) {
+  if (!req.path.includes('ready') && !verifyAuthroizationToken(req)) {
     return res.status(403).json({ error: 'No auth token provided' });
   }
 
   next();
 }
 
-function verifyAuthorizationHeader(req: Request): boolean {
+function verifyAuthroizationToken(req: Request): boolean {
+  const authorizationToken = process.env.AUTHORIZATION_KEY;
   const authHeader: string = req.header('Authorization');
   const authParts: string[] = authHeader ? authHeader.split(' ') : [];
-
+  const validAuthHeader =
+    Boolean(authHeader) &&
+    ((authParts[0] === 'Bearer' && authParts[1] === authorizationToken) ||
+      authParts[0] === authorizationToken);
   // Ensure preflight requests are accepted
-  return (
-    authHeader &&
-    ((authParts[0] === 'Bearer' &&
-      authParts[1] === process.env.AUTHORIZATION_KEY) ||
-      authParts[0] === process.env.AUTHORIZATION_KEY)
-  );
+  return validAuthHeader || req.param('auth') === authorizationToken;
 }
