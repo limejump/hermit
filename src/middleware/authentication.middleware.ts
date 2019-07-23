@@ -13,7 +13,7 @@ export function authenticate(
     return;
   }
 
-  if (!req.path.includes('ready') && !verifyJWT(req)) {
+  if (!req.path.endsWith('/ready') && !verifyJWT(req)) {
     return res.status(401).json({ error: 'Authorization failed' });
   }
 
