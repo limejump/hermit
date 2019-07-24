@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 
+import { verify } from 'jsonwebtoken';
+
 export function authenticate(
   req: Request,
   res: Response,
@@ -11,21 +13,28 @@ export function authenticate(
     return;
   }
 
-  if (!req.path.includes('ready') && !verifyAuthroizationToken(req)) {
-    return res.status(403).json({ error: 'No auth token provided' });
+  if (!req.path.endsWith('/ready') && !verifyJWT(req)) {
+    return res.status(401).json({ error: 'Authorization failed' });
   }
 
   next();
 }
 
-function verifyAuthroizationToken(req: Request): boolean {
-  const authorizationToken = process.env.AUTHORIZATION_KEY;
+function verifyJWT(req: Request): boolean {
+  const jwtSecret = process.env.JWT_SECRET;
   const authHeader: string = req.header('Authorization');
   const authParts: string[] = authHeader ? authHeader.split(' ') : [];
-  const validAuthHeader =
-    Boolean(authHeader) &&
-    ((authParts[0] === 'Bearer' && authParts[1] === authorizationToken) ||
-      authParts[0] === authorizationToken);
-  // Ensure preflight requests are accepted
-  return validAuthHeader || req.param('auth') === authorizationToken;
+
+  try {
+    // We check for Bearer first per the spec but traditionally Limejump auth doesn't require Bearer so we also allow that
+    if (authParts[0] === 'Bearer' && authParts[1]) {
+      return Boolean(verify(authParts[1], jwtSecret));
+    } else {
+      return Boolean(verify(authParts[0], jwtSecret));
+    }
+  } catch (e) {
+    // Empty catch
+  }
+
+  return false;
 }

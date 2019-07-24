@@ -1,6 +1,6 @@
 {
   "name": "hermit",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A service to enable client side logging using Humio without revealing secrets",
   "author": "Arran France <arran@arranfrance.com>",
   "license": "MIT",
@@ -28,9 +28,11 @@
     "@nestjs/core": "^6.0.0",
     "@nestjs/platform-express": "^6.0.0",
     "@types/dotenv": "^6.1.0",
+    "@types/jsonwebtoken": "^8.3.2",
     "compression": "^1.7.3",
     "dotenv": "^7.0.0",
     "helmet": "^3.16.0",
+    "jsonwebtoken": "^8.5.1",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.3.3"
