@@ -26,6 +26,7 @@ function verifyJWT(req: Request): boolean {
   const authParts: string[] = authHeader ? authHeader.split(' ') : [];
 
   try {
+    // We check for Bearer first per the spec but traditionally Limejump auth doesn't require Bearer so we also allow that
     if (authParts[0] === 'Bearer' && authParts[1]) {
       return Boolean(verify(authParts[1], jwtSecret));
     } else {
