@@ -11,14 +11,14 @@ It provides three endpoints:
     logs to Humio - note these logs will require a parser to be configured
 * `/v1/ready` - returns `200` if the microservice is online
 
-All endpoints except `/v1/ready` require an authorization key to be sent in the header.
+All endpoints except `/v1/ready` require a JWT authorization token to be sent in the header.
 
 ### Example Query
 
 ```curl
 curl --request POST \
   --url http://localhost:3000/v1/structured \
-  --header 'authorization: Bearer MY_AUTHORIZATION_KEY' \
+  --header 'authorization: Bearer MY_JWT_TOKEN' \
   --header 'content-type: application/json' \
   --data '[
   {
@@ -64,8 +64,7 @@ The application requires two secret environment variables to be set. Examples of
 `.env` file can be used and authorization is disabled. For production these values are
 _required_ to be set and a `.env` file cannot be used.
 
-* `AUTHORIZATION_KEY`, the key to be used in the Authorization header. Is okay to be
-    exposed to the client. Easily rotated.
+* `JWT_SECRET`, the secret key used to decode JWT tokens passed in the header
 * `DEFAULT_INGEST_TOKEN`, the ingest token for the
     [Humio repository](https://docs.humio.com/concepts/repositories/) you wish to log to.
     More details about ingest tokens

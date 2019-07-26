@@ -3,5 +3,5 @@ kind: Secret
 metadata:
   name: hermit-keys
 data:
-  AUTHORIZATION_KEY: <your auth key here>
+  JWT_SECRET: <your jwt secret here>
   DEFAULT_INGEST_TOKEN: <your Humio ingest token here>

@@ -25,8 +25,8 @@ async function bootstrap() {
   await app.listen(3000);
 }
 
-if (!process.env.AUTHORIZATION_KEY && process.env.NODE_ENV !== 'development') {
-  throw { error: 'No authorization key and running in production' };
+if (!process.env.JWT_SECRET && process.env.NODE_ENV !== 'development') {
+  throw { error: 'No JWT secret nd running in production' };
 }
 
 if (
