@@ -13,15 +13,9 @@ async function bootstrap() {
   app.use(helmet());
   app.use(compression());
   app.useGlobalFilters(new HttpExceptionFilter());
-  const defaultOriginsAllowed =
-    process.env.NODE_ENV !== 'production' ? [/localhost/, /127.0.0.1$/] : [];
-  const corsOptions = {
-    origin: process.env.WHITELIST_CORS
-      ? [...process.env.WHITELIST_CORS.split(','), ...defaultOriginsAllowed]
-      : defaultOriginsAllowed,
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-  };
-  app.enableCors(corsOptions);
+
+  app.enableCors(createCorsOptions());
+
   await app.listen(3000);
 }
 
@@ -37,3 +31,28 @@ if (
 }
 
 bootstrap();
+
+/// Creates the CORs Options Object
+/// https://expressjs.com/en/resources/middleware/cors.html
+function createCorsOptions() {
+  const defaultOriginsAllowed =
+    process.env.NODE_ENV !== 'production' ? [/localhost/, /127.0.0.1$/] : [];
+  let whitelistedOrigins = [];
+
+  if (process.env.WHITELIST_CORS) {
+    whitelistedOrigins = process.env.WHITELIST_CORS.split(',').map(r => {
+      // Ensure the CORs regex strings are converted to regex
+      if (r.startsWith('/') && r.endsWith('/')) {
+        return new RegExp(r.substr(1, r.length - 2));
+      }
+      return r;
+    });
+  }
+
+  const origin = [...whitelistedOrigins, ...defaultOriginsAllowed];
+
+  return {
+    origin,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  };
+}
