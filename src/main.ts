@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import './utils/env';
 
+import * as Sentry from '@sentry/node';
 import * as helmet from 'helmet';
 import * as compression from 'compression';
 import { AppModule } from './app.module';
@@ -28,6 +29,12 @@ if (
   process.env.NODE_ENV !== 'development'
 ) {
   throw { error: 'No ingest token set up and running in production' };
+}
+
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: 'https://c2407fb242fb4d1c8f79aad025155272@sentry.io/1518356',
+  });
 }
 
 bootstrap();
